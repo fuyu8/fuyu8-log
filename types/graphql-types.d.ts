@@ -1824,6 +1824,8 @@ export type QuerySiteArgs = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<IntQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
+  polyfill?: Maybe<BooleanQueryOperatorInput>;
+  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -1961,6 +1963,8 @@ export type Site = Node & {
   siteMetadata?: Maybe<SiteSiteMetadata>;
   port?: Maybe<Scalars['Int']>;
   host?: Maybe<Scalars['String']>;
+  polyfill?: Maybe<Scalars['Boolean']>;
+  pathPrefix?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -2166,6 +2170,8 @@ export type SiteFieldsEnum =
   | 'siteMetadata___social___twitter'
   | 'port'
   | 'host'
+  | 'polyfill'
+  | 'pathPrefix'
   | 'id'
   | 'parent___id'
   | 'parent___parent___id'
@@ -2258,6 +2264,8 @@ export type SiteFilterInput = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<IntQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
+  polyfill?: Maybe<BooleanQueryOperatorInput>;
+  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -2313,10 +2321,66 @@ export type SitePageConnectionGroupArgs = {
 
 export type SitePageContext = {
   slug?: Maybe<Scalars['String']>;
+  previous?: Maybe<SitePageContextPrevious>;
+  next?: Maybe<SitePageContextNext>;
 };
 
 export type SitePageContextFilterInput = {
   slug?: Maybe<StringQueryOperatorInput>;
+  previous?: Maybe<SitePageContextPreviousFilterInput>;
+  next?: Maybe<SitePageContextNextFilterInput>;
+};
+
+export type SitePageContextNext = {
+  fields?: Maybe<SitePageContextNextFields>;
+  frontmatter?: Maybe<SitePageContextNextFrontmatter>;
+};
+
+export type SitePageContextNextFields = {
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type SitePageContextNextFieldsFilterInput = {
+  slug?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextNextFilterInput = {
+  fields?: Maybe<SitePageContextNextFieldsFilterInput>;
+  frontmatter?: Maybe<SitePageContextNextFrontmatterFilterInput>;
+};
+
+export type SitePageContextNextFrontmatter = {
+  title?: Maybe<Scalars['String']>;
+};
+
+export type SitePageContextNextFrontmatterFilterInput = {
+  title?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextPrevious = {
+  fields?: Maybe<SitePageContextPreviousFields>;
+  frontmatter?: Maybe<SitePageContextPreviousFrontmatter>;
+};
+
+export type SitePageContextPreviousFields = {
+  slug?: Maybe<Scalars['String']>;
+};
+
+export type SitePageContextPreviousFieldsFilterInput = {
+  slug?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextPreviousFilterInput = {
+  fields?: Maybe<SitePageContextPreviousFieldsFilterInput>;
+  frontmatter?: Maybe<SitePageContextPreviousFrontmatterFilterInput>;
+};
+
+export type SitePageContextPreviousFrontmatter = {
+  title?: Maybe<Scalars['String']>;
+};
+
+export type SitePageContextPreviousFrontmatterFilterInput = {
+  title?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageEdge = {
@@ -2333,6 +2397,10 @@ export type SitePageFieldsEnum =
   | 'matchPath'
   | 'isCreatedByStatefulCreatePages'
   | 'context___slug'
+  | 'context___previous___fields___slug'
+  | 'context___previous___frontmatter___title'
+  | 'context___next___fields___slug'
+  | 'context___next___frontmatter___title'
   | 'pluginCreator___id'
   | 'pluginCreator___parent___id'
   | 'pluginCreator___parent___parent___id'
@@ -2390,12 +2458,10 @@ export type SitePageFieldsEnum =
   | 'pluginCreator___pluginOptions___background_color'
   | 'pluginCreator___pluginOptions___theme_color'
   | 'pluginCreator___pluginOptions___display'
-  | 'pluginCreator___pluginOptions___icon'
   | 'pluginCreator___pluginOptions___cache_busting_mode'
   | 'pluginCreator___pluginOptions___include_favicon'
   | 'pluginCreator___pluginOptions___legacy'
   | 'pluginCreator___pluginOptions___theme_color_in_head'
-  | 'pluginCreator___pluginOptions___cacheDigest'
   | 'pluginCreator___pluginOptions___fileName'
   | 'pluginCreator___pluginOptions___pathCheck'
   | 'pluginCreator___nodeAPIs'
@@ -2688,12 +2754,10 @@ export type SitePluginFieldsEnum =
   | 'pluginOptions___background_color'
   | 'pluginOptions___theme_color'
   | 'pluginOptions___display'
-  | 'pluginOptions___icon'
   | 'pluginOptions___cache_busting_mode'
   | 'pluginOptions___include_favicon'
   | 'pluginOptions___legacy'
   | 'pluginOptions___theme_color_in_head'
-  | 'pluginOptions___cacheDigest'
   | 'pluginOptions___fileName'
   | 'pluginOptions___pathCheck'
   | 'nodeAPIs'
@@ -2818,12 +2882,10 @@ export type SitePluginPluginOptions = {
   background_color?: Maybe<Scalars['String']>;
   theme_color?: Maybe<Scalars['String']>;
   display?: Maybe<Scalars['String']>;
-  icon?: Maybe<Scalars['String']>;
   cache_busting_mode?: Maybe<Scalars['String']>;
   include_favicon?: Maybe<Scalars['Boolean']>;
   legacy?: Maybe<Scalars['Boolean']>;
   theme_color_in_head?: Maybe<Scalars['Boolean']>;
-  cacheDigest?: Maybe<Scalars['String']>;
   fileName?: Maybe<Scalars['String']>;
   pathCheck?: Maybe<Scalars['Boolean']>;
 };
@@ -2839,12 +2901,10 @@ export type SitePluginPluginOptionsFilterInput = {
   background_color?: Maybe<StringQueryOperatorInput>;
   theme_color?: Maybe<StringQueryOperatorInput>;
   display?: Maybe<StringQueryOperatorInput>;
-  icon?: Maybe<StringQueryOperatorInput>;
   cache_busting_mode?: Maybe<StringQueryOperatorInput>;
   include_favicon?: Maybe<BooleanQueryOperatorInput>;
   legacy?: Maybe<BooleanQueryOperatorInput>;
   theme_color_in_head?: Maybe<BooleanQueryOperatorInput>;
-  cacheDigest?: Maybe<StringQueryOperatorInput>;
   fileName?: Maybe<StringQueryOperatorInput>;
   pathCheck?: Maybe<BooleanQueryOperatorInput>;
 };

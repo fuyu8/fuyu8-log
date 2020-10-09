@@ -1,0 +1,22 @@
+{
+    "include": [
+        "./types/**/*",
+        "./src/**/*"
+    ],
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "commonjs",
+        "lib": [
+            "dom",
+            "es2017"
+        ],
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "jsx": "react",
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "noEmit": true,
+        "skipLibCheck": true,
+    }
+}
