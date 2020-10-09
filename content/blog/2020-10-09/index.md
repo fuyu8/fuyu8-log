@@ -56,7 +56,5 @@ declare const __PATH_PREFIX__: string
 }
 ```
 
-参考:
-
-- [gatsby/tsconfig\.json at master · gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-typescript/tsconfig.json)
-  - module を`esnext`にすると import まわりでエラーが出ちゃったので、とりあえず commonjs にしてみた
+参考: [gatsby/tsconfig\.json at master · gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-typescript/tsconfig.json)  
+module を`esnext`にすると import まわりでエラーが出ちゃったので、とりあえず commonjs にしてみた
