@@ -12,7 +12,7 @@ import { useStaticQuery, graphql } from "gatsby"
 
 interface SEOProps {
   title: string,
-  description: string,
+  description?: string,
   lang?: string,
   meta?: React.DetailedHTMLProps<React.MetaHTMLAttributes<HTMLMetaElement>, HTMLMetaElement>[]
 }

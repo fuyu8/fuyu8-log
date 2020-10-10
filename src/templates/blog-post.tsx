@@ -1,16 +1,14 @@
 import React from "react"
 import { PageProps, Link, graphql } from "gatsby"
 import { BlogPostBySlugQuery, MarkdownRemark } from "../../types/graphql-types"
+import { BlogPostPageContext } from "../../gatsby-node"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 type DataProps = BlogPostBySlugQuery
-type PageContextProps = {
-  previous?: MarkdownRemark
-  next?: MarkdownRemark
-}
+type PageContextProps = BlogPostPageContext
 
 const BlogPostTemplate: React.FC<PageProps<DataProps, PageContextProps>> = ({
   data,
