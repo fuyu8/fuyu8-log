@@ -1,6 +1,6 @@
 import React from "react"
 import { PageProps, Link, graphql } from "gatsby"
-import { BlogPostBySlugQuery, MarkdownRemark } from "../../types/graphql-types"
+import { BlogPostBySlugQuery } from "../../types/graphql-types"
 import { BlogPostPageContext } from "../../gatsby-node"
 
 import Bio from "../components/bio"

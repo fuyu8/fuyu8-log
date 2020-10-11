@@ -1,6 +1,7 @@
 ---
 title: "Gatsby+Netlifyでブログ構築＆Typescript化"
 date: "2020-10-09"
+tags: ["gatsby", "typescript"]
 ---
 
 このブログの環境構築と、ハマったところについて覚書。

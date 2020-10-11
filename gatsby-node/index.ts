@@ -2,16 +2,25 @@ import path from "path"
 import { createFilePath } from "gatsby-source-filesystem"
 import { Fields, MarkdownRemark } from "../types/graphql-types"
 import { Actions, GatsbyNode } from "gatsby"
+import _ from "lodash"
 
 type Result = {
-  allMarkdownRemark: {
+  postsRemark: {
     nodes: MarkdownRemark[]
+  }
+  tagsGroup: {
+    group: {
+      fieldValue: string
+    }[]
   }
 }
 export type BlogPostPageContext = {
   slug: Fields["slug"]
   previous?: MarkdownRemark
   next?: MarkdownRemark
+}
+export type TagPageContext = {
+  tag: string
 }
 
 export const createPages: GatsbyNode["createPages"] = async ({
@@ -22,13 +31,14 @@ export const createPages: GatsbyNode["createPages"] = async ({
   const { createPage } = actions
 
   // Define a template for blog post
-  const blogPost = path.resolve(`./src/templates/blog-post.tsx`)
+  const blogPostTemplate = path.resolve(`./src/templates/blog-post.tsx`)
+  const tagTemplate = path.resolve("./src/templates/tags.tsx")
 
   // Get all markdown blog posts sorted by date
   const result = await graphql<Result>(
     `
       {
-        allMarkdownRemark(
+        postsRemark: allMarkdownRemark(
           sort: { fields: [frontmatter___date], order: DESC }
           limit: 1000
         ) {
@@ -39,6 +49,11 @@ export const createPages: GatsbyNode["createPages"] = async ({
             frontmatter {
               title
             }
+          }
+        }
+        tagsGroup: allMarkdownRemark(limit: 2000) {
+          group(field: frontmatter___tags) {
+            fieldValue
           }
         }
       }
@@ -53,7 +68,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
     return
   }
 
-  const posts = result.data.allMarkdownRemark.nodes
+  const posts = result.data.postsRemark.nodes
 
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
@@ -66,7 +81,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
       createPage<BlogPostPageContext>({
         path: post.fields.slug,
-        component: blogPost,
+        component: blogPostTemplate,
         context: {
           slug: post.fields.slug,
           previous,
@@ -75,6 +90,17 @@ export const createPages: GatsbyNode["createPages"] = async ({
       })
     })
   }
+  const tags = result.data.tagsGroup.group
+
+  tags.forEach(tag => {
+    createPage({
+      path: `/tags/${_.kebabCase(tag.fieldValue)}`,
+      component: tagTemplate,
+      context: {
+        tag: tag.fieldValue,
+      },
+    })
+  })
 }
 
 export const onCreateNode: GatsbyNode["onCreateNode"] = ({
