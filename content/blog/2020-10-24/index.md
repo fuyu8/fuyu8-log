@@ -33,12 +33,12 @@ npx というのは、ローカルにインストールしたパッケージを�
 
 チュートリアルを参考に、main.js と preview.js、package.json を直します。
 
-```main.js
+```js
 // .storybook/main.js
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
-// ここから追記
+  // ここから追記
   webpackFinal: async config => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
     config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
@@ -59,7 +59,7 @@ module.exports = {
     // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
     config.resolve.mainFields = ["browser", "module", "main"]
 
-// === Typescriptで書く場合に必要な設定 ===
+    // === Typescriptで書く場合に必要な設定 ===
     config.module.rules.push({
       test: /\.(ts|tsx)$/,
       loader: require.resolve("babel-loader"),
@@ -73,15 +73,15 @@ module.exports = {
       },
     })
     config.resolve.extensions.push(".ts", ".tsx")
-// === Typescriptの場合に必要な設定 ここまで ===
+    // === Typescriptの場合に必要な設定 ここまで ===
 
     return config
   },
-// ここまで追記
+  // ここまで追記
 }
 ```
 
-```preview.js
+```js
 // .storybook/preview.js
 
 // もともと設定されてた内容の下に、下記を追記
@@ -112,7 +112,8 @@ window.___navigate = pathname => {
 
 package.json の scripts で、storybook 立ち上げ前に staticQuery のデータを storybook 用にコピーしておき、storybook は`NODE_ENV=test`で立ち上げます。
 
-```package.json
+```json
+// package.json
 "scripts": {
     ...略...
     "copy-static-queries": "cp -r ./public/page-data/sq/d ./public/static",
