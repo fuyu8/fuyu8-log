@@ -2997,10 +2997,10 @@ export type StringQueryOperatorInput = {
   glob?: Maybe<Scalars['String']>;
 };
 
-export type BioQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type BioQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BioQueryQuery = { avatar?: Maybe<{ childImageSharp?: Maybe<{ fixed?: Maybe<GatsbyImageSharpFixedFragment> }> }>, site?: Maybe<{ siteMetadata?: Maybe<{ author?: Maybe<Pick<Author, 'name' | 'summary'>>, social?: Maybe<Pick<Social, 'twitter'>> }> }> };
+export type BioQuery = { avatar?: Maybe<{ childImageSharp?: Maybe<{ fixed?: Maybe<GatsbyImageSharpFixedFragment> }> }>, site?: Maybe<{ siteMetadata?: Maybe<{ author?: Maybe<Pick<Author, 'name' | 'summary'>>, social?: Maybe<Pick<Social, 'twitter'>> }> }> };
 
 export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
 
