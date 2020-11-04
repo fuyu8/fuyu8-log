@@ -1,3 +1,4 @@
+const path = require("path")
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
@@ -18,8 +19,28 @@ module.exports = {
       require.resolve("babel-plugin-remove-graphql-queries"),
     ]
 
+    config.module.rules[7].exclude = [/\.module\.css$/]
+
     // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
     config.resolve.mainFields = ["browser", "module", "main"]
+
+    config.module.rules.push({
+      test: /\.module\.css$/,
+      use: [
+        require.resolve("style-loader"),
+        {
+          loader: require.resolve("css-loader"),
+          options: {
+            importLoaders: 1,
+            modules: {
+              modules: true,
+              localIdentName: "[path][name]__[local]--[hash:base64:5]",
+              context: path.resolve(__dirname, "src"),
+            },
+          },
+        },
+      ],
+    })
 
     config.module.rules.push({
       test: /\.(ts|tsx)$/,
